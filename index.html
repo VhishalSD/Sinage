@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="nl">
+<!DOCTYPE html>
+
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actueel Aanbod</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -16,14 +19,21 @@
             width: 1080px;
             height: 1920px;
             background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
             position: relative;
             overflow: hidden;
         }
 
-        /* Bordeaux kader */
-        .container::before {
+        /* ════════════════════════════════════════════
+           TEMPLATE A – RELIPLAN (bordeaux)
+        ════════════════════════════════════════════ */
+        #tpl-reliplan {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        #tpl-reliplan::before {
             content: '';
             position: absolute;
             inset: 18px;
@@ -32,14 +42,13 @@
             z-index: 10;
         }
 
-        /* ── HEADER ── */
-        .header {
+        .rp-header {
             padding: 44px 60px 18px;
             text-align: center;
             background: #fff;
         }
 
-        .status-label {
+        .rp-status {
             font-size: 100px;
             font-weight: 900;
             color: #7a0030;
@@ -49,62 +58,61 @@
             text-transform: uppercase;
         }
 
-        .divider-thick {
+        .rp-divider-thick {
             height: 4px;
             background: #7a0030;
             margin: 14px 50px 4px;
         }
 
-        .divider-thin {
+        .rp-divider-thin {
             height: 1px;
             background: #7a0030;
-            margin: 0 50px 0;
+            margin: 0 50px;
         }
 
-        /* ── ADRES ── */
-        .address-bar {
+        .rp-address {
             text-align: center;
             padding: 22px 60px 20px;
             background: #fff;
         }
 
-        .property-title {
+        .rp-title {
             font-size: 42px;
             font-weight: bold;
-            color: #1a1a1a;
+            color: #7a0030;
         }
 
-        .location {
+        .rp-location {
             font-size: 30px;
             color: #666;
             margin-top: 6px;
         }
 
-        /* ── FOTO ── */
-        .photo-wrapper {
+        .rp-photo {
             margin: 0 40px;
             flex: 1;
             overflow: hidden;
             border: 2px solid #ccc;
+            min-height: 0;
         }
 
-        .photo-wrapper img {
+        .rp-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
             display: block;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.8s ease;
         }
 
-        /* ── PRIJS + BEDRIJF ── */
-        .price-bar {
+        .rp-price-bar {
             display: flex;
             margin: 0 40px;
             min-height: 155px;
+            flex-shrink: 0;
         }
 
-        .price-block {
+        .rp-price-block {
             background: #7a0030;
             color: #fff;
             padding: 24px 36px;
@@ -114,18 +122,18 @@
             justify-content: center;
         }
 
-        .price-label {
+        .rp-price-label {
             font-size: 26px;
             font-weight: bold;
             margin-bottom: 4px;
         }
 
-        .price-value {
+        .rp-price-value {
             font-size: 48px;
             font-weight: 900;
         }
 
-        .logo-block {
+        .rp-logo-block {
             background: #fff;
             border: 2px solid #7a0030;
             border-left: none;
@@ -136,31 +144,23 @@
             padding: 20px 30px;
         }
 
-        .company-name {
-            font-size: 38px;
-            font-weight: 900;
-            color: #7a0030;
-            letter-spacing: 3px;
-            text-align: center;
-            font-family: Georgia, serif;
+        .rp-logo-block img {
+            max-width: 220px;
+            max-height: 100px;
+            object-fit: contain;
         }
 
-        /* ── OMSCHRIJVING ── */
-        .description-bar {
+        .rp-desc {
             background: #7a0030;
             margin: 0 40px;
             padding: 26px 36px;
-            color: #fff;
-        }
-
-        .desc-text {
+            color: #f0d0d8;
             font-size: 21px;
             line-height: 1.65;
-            color: #f0d0d8;
+            flex-shrink: 0;
         }
 
-        /* ── FOOTER: weer + tijd ── */
-        .footer-bar {
+        .rp-footer {
             background: #fff;
             padding: 16px 55px 30px;
             display: flex;
@@ -168,246 +168,669 @@
             align-items: center;
             font-size: 20px;
             color: #888;
+            flex-shrink: 0;
         }
 
-        /* ── HYPOTHEEK SLIDE ── */
-        .mortgage-slide {
+        /* ════════════════════════════════════════════
+           TEMPLATE B – VASTGOED EXPERTS (groen)
+        ════════════════════════════════════════════ */
+        #tpl-vge {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .vge-header {
+            background: #3cb54a;
+            color: #fff;
+            text-align: center;
+            font-size: 148px;
+            font-weight: 900;
+            letter-spacing: 18px;
+            text-transform: uppercase;
+            padding: 52px 0 44px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .vge-photo {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .vge-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.8s ease;
+        }
+
+        .vge-info-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            min-height: 160px;
+        }
+
+        .vge-adres {
+            background: rgba(255,255,255,0.93);
+            flex: 1;
+            padding: 28px 38px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .vge-straat {
+            font-size: 46px;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1.05;
+        }
+
+        .vge-stad {
+            font-size: 28px;
+            font-weight: 400;
+            color: #333;
+            margin-top: 8px;
+        }
+
+        .vge-prijs-blok {
+            background: #3cb54a;
+            width: 340px;
+            flex-shrink: 0;
+            padding: 28px 36px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .vge-prijs-label {
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.88);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .vge-prijs-bedrag {
+            font-size: 34px;
+            font-weight: 800;
+            color: #fff;
+            margin-top: 8px;
+            line-height: 1.1;
+        }
+
+        .vge-energie {
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            margin-top: 10px;
+        }
+
+        .vge-green-block {
+            background: #3cb54a;
+            height: 168px;
+            flex-shrink: 0;
+        }
+
+        .vge-footer {
+            background: #fff;
+            border-top: 2px solid #e5e5e5;
+            padding: 28px 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .vge-logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vge-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .vge-pin {
+            width: 42px;
+            height: 42px;
+            fill: #3cb54a;
+            flex-shrink: 0;
+        }
+
+        .vge-logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #1a1a1a;
+        }
+
+        .vge-logo-text em {
+            font-style: normal;
+            color: #3cb54a;
+        }
+
+        .vge-tagline {
+            font-size: 14px;
+            color: #aaa;
+            font-style: italic;
+            font-weight: 400;
+            margin-top: 5px;
+            margin-left: 54px;
+        }
+
+        .vge-contact {
+            text-align: right;
+            font-size: 19px;
+            color: #444;
+            line-height: 1.9;
+            font-weight: 500;
+        }
+
+        .vge-contact a {
+            color: #3cb54a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .vge-footer-bottom {
+            background: #fff;
+            padding: 10px 44px 18px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            color: #aaa;
+            flex-shrink: 0;
+        }
+
+        /* ════════════════════════════════════════════
+           HYPOTHEEK SLIDE
+        ════════════════════════════════════════════ */
+
+        #tpl-hypotheek {
             display: none;
             width: 100%;
             height: 100%;
-            background: #ffffff;
-            padding: 60px;
-            box-sizing: border-box;
+            background: #fff;
+            flex-direction: column;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 0;
         }
 
-        .mortgage-slide img {
-            width: 100%;
-            height: 100%;
+        .hyp-top {
+            padding: 60px 70px 50px;
+            border-bottom: 3px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .hyp-stair-row {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 44px;
+        }
+
+        .hyp-cta {
+            font-size: 46px;
+            font-weight: 700;
+            color: #2a2a2a;
+            line-height: 1.2;
+        }
+
+        .hyp-cta strong {
+            color: #e87722;
+            font-weight: 900;
+        }
+
+        .hyp-logo {
+            height: 90px;
             object-fit: contain;
-            display: block;
+            margin-bottom: 32px;
         }
 
+        .hyp-contact {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            font-size: 26px;
+            font-weight: 600;
+            color: #2a2a2a;
+        }
+
+        .hyp-contact-item {
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .hyp-divider {
+            height: 8px;
+            background: linear-gradient(90deg,#e87722 0%,#f5a55a 100%);
+        }
+
+        .hyp-rente {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f8f8f8;
+            min-height: 0;
+        }
+
+        .hyp-rente-label {
+            background: #2a2a2a;
+            color: #fff;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            padding: 24px;
+            text-transform: uppercase;
+        }
+
+        .hyp-rente-img {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px 40px 40px;
+            min-height: 0;
+        }
+
+        .hyp-rente-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
     </style>
 
-
 </head>
-<body><div class="container">
+<body>
+<div class="container">
 
-    <!-- PROPERTY SLIDE -->
-    <div id="property-slide" style="display:flex; flex-direction:column; height:100%;">
-
-        <div class="header">
-            <div class="status-label" id="property-status">TE KOOP</div>
+    <!-- ══ TEMPLATE A: RELIPLAN ══ -->
+    <div id="tpl-reliplan">
+        <div class="rp-header">
+            <div class="rp-status" id="rp-status">TE KOOP</div>
         </div>
-        <div class="divider-thick"></div>
-        <div class="divider-thin"></div>
-
-        <div class="address-bar">
-            <div class="property-title" id="property-title"></div>
-            <div class="location"       id="property-location"></div>
+        <div class="rp-divider-thick" id="rp-divider-thick"></div>
+        <div class="rp-divider-thin"  id="rp-divider-thin"></div>
+        <div class="rp-address">
+            <div class="rp-title"    id="rp-title"></div>
+            <div class="rp-location" id="rp-location"></div>
         </div>
-
-        <div class="photo-wrapper">
-            <img id="property-image" src="" alt="Vastgoed afbeelding">
+        <div class="rp-photo">
+            <img id="rp-image" src="" alt="">
         </div>
-
-        <div class="price-bar">
-            <div class="price-block">
-                <div class="price-label">Vraagprijs:</div>
-                <div class="price-value" id="property-price"></div>
+        <div class="rp-price-bar">
+            <div class="rp-price-block" id="rp-price-block">
+                <div class="rp-price-label">Vraagprijs:</div>
+                <div class="rp-price-value" id="rp-price"></div>
             </div>
-            <div class="logo-block">
+            <div class="rp-logo-block" id="rp-logo-block">
+                <img src="https://www.reliplan.nl/img/logo-Reliplan.png" alt="Reliplan">
+            </div>
+        </div>
+        <div class="rp-desc" id="rp-desc"></div>
+        <div class="rp-footer">
+            <div id="rp-weather">Weer laden...</div>
+            <div id="rp-datetime"></div>
+        </div>
+    </div>
+
+    <!-- ══ TEMPLATE B: VASTGOED EXPERTS ══ -->
+    <div id="tpl-vge">
+        <div class="vge-header" id="vge-status">TE KOOP</div>
+        <div class="vge-photo">
+            <img id="vge-image" src="" alt="">
+            <div class="vge-info-bar">
+                <div class="vge-adres">
+                    <div class="vge-straat" id="vge-title"></div>
+                    <div class="vge-stad"   id="vge-location"></div>
+                </div>
+                <div class="vge-prijs-blok">
+                    <div class="vge-prijs-label">Vraagprijs</div>
+                    <div class="vge-prijs-bedrag" id="vge-price"></div>
+                    <div class="vge-energie"      id="vge-energie"></div>
+                </div>
+            </div>
+        </div>
+        <div class="vge-green-block"></div>
+        <div class="vge-footer">
+            <div class="vge-logo">
+                <div class="vge-logo-row">
+                    <svg class="vge-pin" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <span class="vge-logo-text">dé <em>VASTGOED EXPERTS</em></span>
+                </div>
+                <div class="vge-tagline">Transparant en betrokken</div>
+            </div>
+            <div class="vge-contact">
+                088-1669500<br>
+                <a href="mailto:kantoor@devastgoedexperts.nl">kantoor@devastgoedexperts.nl</a><br>
+                <a href="https://devastgoedexperts.nl" target="_blank">devastgoedexperts.nl</a>
+            </div>
+        </div>
+        <div class="vge-footer-bottom">
+            <div id="vge-weather">Weer laden...</div>
+            <div id="vge-datetime"></div>
+        </div>
+    </div>
+
+    <!-- ══ HYPOTHEEK SLIDE ══ -->
+    <div id="tpl-hypotheek">
+
+        <div class="hyp-top">
+
+            <div class="hyp-stair-row">
+
+                <!-- Pixel-perfect trap + stickman -->
+                <svg
+                        width="260"
+                        height="220"
+                        viewBox="0 0 260 220"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        stroke="#e87722"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                >
+
+                    <!-- Trap -->
+                    <polyline
+                            points="
+            10,205
+            48,205 48,175
+            90,175 90,145
+            132,145 132,115
+            174,115 174,85
+            216,85 216,55
+            250,55
+          "
+                            stroke-width="10"
+                    />
+
+                    <!-- Stickman -->
+                    <g stroke-width="8">
+
+                        <!-- hoofd -->
+                        <circle cx="158" cy="28" r="14"/>
+
+                        <!-- romp -->
+                        <line x1="158" y1="42" x2="158" y2="76"/>
+
+                        <!-- armen -->
+                        <line x1="158" y1="58" x2="176" y2="68" stroke-width="7"/>
+                        <line x1="158" y1="58" x2="142" y2="72" stroke-width="7"/>
+
+                        <!-- been voor (voet exact op trede y=85) -->
+                        <line x1="158" y1="76" x2="172" y2="85"/>
+                        <line x1="172" y1="85" x2="182" y2="85" stroke-width="7"/>
+
+                        <!-- been achter (ook exact op y=85) -->
+                        <line x1="158" y1="76" x2="146" y2="90"/>
+                        <line x1="146" y1="90" x2="136" y2="85" stroke-width="7"/>
+
+                    </g>
+                </svg>
+
+                <div class="hyp-cta">
+                    Wij zitten op de<br>
+                    <strong>1e verdieping</strong> &mdash;<br>
+                    loop even naar boven!
+                </div>
+
+            </div>
+
+            <!-- LOGO -->
+            <img class="hyp-logo"
+                 src="https://definancieleexperts.nl/media/cache/logo_breed/media/licentie/427/De_financiele_experts.jpg"
+                 alt="dé Financiële Experts">
+
+            <div class="hyp-contact">
+                <div class="hyp-contact-item">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#e87722">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                    </svg>
+                    Raadhuisplein 4, Nieuwerkerk a/d IJssel
+                </div>
+                <div>088-1669555</div>
+            </div>
+
+        </div>
+
+        <div class="hyp-divider"></div>
+
+        <div class="hyp-rente">
+            <div class="hyp-rente-label">Actuele Hypotheekrentes</div>
+            <div class="hyp-rente-img">
                 <img
-                        src="https://www.reliplan.nl/img/logo-Reliplan.png"
-                        alt="Reliplan logo">
+                        src="https://adviesmodules.nl/api/public/images/rentes/ec5054cbc1e3931c31b00a69404fc86efddc8c1a08d5634824e28230240d1502.gif"
+                        alt="Actuele hypotheekrentes"
+                >
             </div>
         </div>
 
-        <div class="description-bar">
-            <div class="desc-text" id="property-extra"></div>
-        </div>
-
-        <div class="footer-bar">
-            <div id="weather">Weer laden...</div>
-            <div id="datetime"></div>
-        </div>
-
-    </div>
-
-    <!-- HYPOTHEEK SLIDE -->
-    <div id="mortgage-slide" class="mortgage-slide">
-        <img
-                src="https://adviesmodules.nl/api/public/images/rentes/ec5054cbc1e3931c31b00a69404fc86efddc8c1a08d5634824e28230240d1502.gif"
-                alt="Actuele hypotheekrentes"
-                style="width:100%; height:100%; object-fit:contain;">
     </div>
 
 
-</div><script>
-    // ─── CONFIGURATIE ─────────────────────────────────────────────
-    const WEATHER_API_KEY = "06322c6a982ff2505e5e14fddfe13da9";
-    const WEATHER_CITY    = "Nieuwerkerk aan den IJssel";
-    const SHEET_URL       = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa29HRCuJc1qEQ2oQlNwNssmog5XiBcTyoVIGg3wbpUiOFLc-q77pOuQ3aA3scxiUFmftQMR08AuxP/pub?output=csv";
-    const SLIDE_INTERVAL  = 10000;
-    // ──────────────────────────────────────────────────────────────
+</div>
+<script>
+    var WEATHER_API_KEY = "06322c6a982ff2505e5e14fddfe13da9";
+    var WEATHER_CITY    = "Nieuwerkerk aan den IJssel";
+    var SHEET_URL       = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRa29HRCuJc1qEQ2oQlNwNssmog5XiBcTyoVIGg3wbpUiOFLc-q77pOuQ3aA3scxiUFmftQMR08AuxP/pub?output=csv";
+    var SLIDE_INTERVAL  = 10000;
 
-    let currentIndex = 0;
-    let properties   = [];
 
-    // Robuuste CSV-parser
-    function parseCSV(text) {
-        const lines   = text.trim().split('\n');
-        const headers = parseLine(lines[0]).map(h => h.trim().toLowerCase());
-        return lines.slice(1)
-            .filter(l => l.trim() !== "")
-            .map(line => {
-                const values = parseLine(line);
-                const obj    = {};
-                headers.forEach((h, i) => obj[h] = (values[i] || "").trim());
-                return obj;
-            });
-    }
+var currentIndex = 0;
+var properties   = [];
 
-    function parseLine(line) {
-        const result = [];
-        let current  = "";
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-            const c = line[i];
-            if (c === '"') {
-                if (inQuotes && line[i + 1] === '"') { current += '"'; i++; }
-                else inQuotes = !inQuotes;
-            } else if (c === ',' && !inQuotes) {
-                result.push(current);
-                current = "";
-            } else {
-                current += c;
-            }
+function parseCSV(text) {
+    var lines   = text.trim().split('\n');
+    var headers = parseLine(lines[0]).map(function(h) { return h.trim().toLowerCase(); });
+    return lines.slice(1)
+        .filter(function(l) { return l.trim() !== ""; })
+        .map(function(line) {
+            var values = parseLine(line);
+            var obj    = {};
+            headers.forEach(function(h, i) { obj[h] = (values[i] || "").trim(); });
+            return obj;
+        });
+}
+
+function parseLine(line) {
+    var result   = [];
+    var current  = "";
+    var inQuotes = false;
+    for (var i = 0; i < line.length; i++) {
+        var c = line[i];
+        if (c === '"') {
+            if (inQuotes && line[i+1] === '"') { current += '"'; i++; }
+            else { inQuotes = !inQuotes; }
+        } else if (c === ',' && !inQuotes) {
+            result.push(current);
+            current = "";
+        } else {
+            current += c;
         }
-        result.push(current);
-        return result;
+    }
+    result.push(current);
+    return result;
+}
+
+function getRpColor(status) {
+    var s = (status || "").toLowerCase();
+    if (s.indexOf("verkocht") !== -1 || s.indexOf("verhuurd") !== -1) { return "#2a7a2a"; }
+    if (s.indexOf("huur")    !== -1) { return "#1a4a8a"; }
+    if (s.indexOf("optie")   !== -1) { return "#b86000"; }
+    return "#7a0030";
+}
+
+function applyRpColor(color) {
+    document.getElementById('rp-price-block').style.background   = color;
+    document.getElementById('rp-desc').style.background          = color;
+    document.getElementById('rp-divider-thick').style.background = color;
+    document.getElementById('rp-divider-thin').style.background  = color;
+    document.getElementById('rp-status').style.color             = color;
+    document.getElementById('rp-logo-block').style.borderColor   = color;
+
+    var styleTag = document.getElementById('rp-dynamic-border');
+    if (!styleTag) {
+        styleTag    = document.createElement('style');
+        styleTag.id = 'rp-dynamic-border';
+        document.head.appendChild(styleTag);
+    }
+    styleTag.textContent = '#tpl-reliplan::before { border-color: ' + color + ' !important; }';
+}
+
+function renderSlide(item) {
+    var tplRp  = document.getElementById('tpl-reliplan');
+    var tplVge = document.getElementById('tpl-vge');
+    var tplHyp = document.getElementById('tpl-hypotheek');
+    var type    = (item.type    || "pand").trim().toLowerCase();
+    var bedrijf = (item.bedrijf || "").trim().toLowerCase();
+    var bedrijf = (item.bedrijf || "").toLowerCase();
+
+    tplRp.style.display  = "none";
+    tplVge.style.display = "none";
+    tplHyp.style.display = "none";
+
+    if (type === "hypotheek") {
+        tplHyp.style.display = "flex";
+        return;
     }
 
-    // Accentkleur op basis van status
-    function getAccentColor(status) {
-        const s = (status || "").toLowerCase();
-        if (s.includes("verkocht") || s.includes("verhuurd")) return "#2a7a2a";
-        if (s.includes("huur"))  return "#1a4a8a";
-        if (s.includes("optie")) return "#b86000";
-        return "#7a0030";
+    if (bedrijf.indexOf("vastgoed") !== -1 || bedrijf === "vge") {
+        tplVge.style.display = "flex";
+
+        var statusText = (item.status || "TE KOOP").toUpperCase();
+        document.getElementById('vge-status').textContent  = statusText;
+        document.getElementById('vge-status').style.background = (statusText.indexOf("VERKOCHT") !== -1) ? "#c0392b" : "#3cb54a";
+        document.getElementById('vge-title').textContent    = item.titel    || "";
+        document.getElementById('vge-location').textContent = item.plaats   || "";
+        document.getElementById('vge-price').textContent    = item.prijs    || "";
+
+        var energieEl = document.getElementById('vge-energie');
+        energieEl.textContent = item.energielabel ? "Energielabel: " + item.energielabel : "";
+
+        fadeImage(document.getElementById('vge-image'), item.afbeelding || "");
+        return;
     }
 
-    function setAccentColor(color) {
-        document.querySelector('.price-block').style.background      = color;
-        document.querySelector('.description-bar').style.background  = color;
-        document.querySelector('.divider-thick').style.background     = color;
-        document.querySelector('.divider-thin').style.background      = color;
-        document.querySelector('.status-label').style.color           = color;
-        document.querySelector('.logo-block').style.borderColor       = color;
+    tplRp.style.display = "flex";
+    var color = getRpColor(item.status);
+    applyRpColor(color);
 
-        // Kader kleur dynamisch updaten
-        let styleTag = document.getElementById('dynamic-accent');
-        if (!styleTag) {
-            styleTag    = document.createElement('style');
-            styleTag.id = 'dynamic-accent';
-            document.head.appendChild(styleTag);
-        }
-        styleTag.textContent = `.container::before { border-color: ${color} !important; }`;
-    }
+    document.getElementById('rp-status').textContent   = (item.status || "TE KOOP").toUpperCase();
+    document.getElementById('rp-title').textContent    = item.titel  || "";
+    document.getElementById('rp-location').textContent = item.plaats || "";
+    document.getElementById('rp-price').textContent    = item.prijs  || "";
+    document.getElementById('rp-desc').textContent     = item.extra  || "";
 
-    function renderSlide(item) {
-        const propertySlide = document.getElementById('property-slide');
-        const mortgageSlide = document.getElementById('mortgage-slide');
-        const imageEl       = document.getElementById('property-image');
-        const type          = (item.type || "pand").toLowerCase();
+    fadeImage(document.getElementById('rp-image'), item.afbeelding || "");
+}
 
-        // HYPOTHEEK SLIDE
-        if (type === "hypotheek") {
-            propertySlide.style.display = "none";
-            mortgageSlide.style.display = "flex";
+    function fadeImage(imgEl, src) {
+        if (!imgEl) return;
+
+        if (!src) {
+            imgEl.style.opacity = 0;
+            imgEl.removeAttribute("src");
             return;
         }
 
-        // PROPERTY SLIDE
-        mortgageSlide.style.display = "none";
-        propertySlide.style.display = "flex";
+        // Fade-out
+        imgEl.style.transition = "opacity 0.6s ease";
+        imgEl.style.opacity = 0;
 
-        const color = getAccentColor(item.status || "");
-        setAccentColor(color);
-
-        document.getElementById('property-status').textContent   = (item.status  || "TE KOOP").toUpperCase();
-        document.getElementById('property-title').textContent    = item.titel     || "";
-        document.getElementById('property-location').textContent = item.plaats    || "";
-        document.getElementById('property-price').textContent    = item.prijs     || "";
-        document.getElementById('property-extra').textContent    = item.extra     || "";
-
-        // Afbeelding fade
-        if (imageEl) imageEl.style.opacity = 0;
-        setTimeout(() => {
-            if (imageEl && item.afbeelding) {
-                imageEl.onload  = () => imageEl.style.opacity = 1;
-                imageEl.onerror = () => imageEl.style.opacity = 0;
-                if (imageEl.src.endsWith(item.afbeelding)) {
-                    imageEl.style.opacity = 1;
-                } else {
-                    imageEl.src = item.afbeelding;
-                }
-            }
-        }, 800);
+        // Wacht tot fade-out klaar is, preload nieuwe, dan fade-in
+        setTimeout(function() {
+            var newImg = new Image();
+            newImg.onload = function() {
+                imgEl.src = src;
+                // reflow for transition
+                imgEl.offsetHeight;
+                imgEl.style.opacity = 1;
+            };
+            newImg.onerror = function() {
+                imgEl.style.opacity = 0;
+                console.warn("Afbeelding kon niet laden:", src);
+            };
+            newImg.src = src;
+        }, 600);
     }
-
-    // Laad Google Sheet als CSV
-    fetch(SHEET_URL)
-        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
-        .then(csv => {
-            const data = parseCSV(csv);
-            if (!data.length) { console.error("Sheet leeg."); return; }
-            properties = data;
+fetch(SHEET_URL)
+    .then(function(r) {
+        if (!r.ok) { throw new Error("HTTP " + r.status); }
+        return r.text();
+    })
+    .then(function(csv) {
+        var data = parseCSV(csv);
+        if (!data.length) { console.error("Sheet leeg."); return; }
+        properties = data;
+        renderSlide(properties[currentIndex]);
+        setInterval(function() {
+            currentIndex = (currentIndex + 1) % properties.length;
             renderSlide(properties[currentIndex]);
-            setInterval(() => {
-                currentIndex = (currentIndex + 1) % properties.length;
-                renderSlide(properties[currentIndex]);
-            }, SLIDE_INTERVAL);
+        }, SLIDE_INTERVAL);
+    })
+    .catch(function(e) { console.error("Sheet fout:", e); });
+
+function updateDateTime() {
+    var now  = new Date();
+    var date = now.toLocaleDateString('nl-NL', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+    date = date.charAt(0).toUpperCase() + date.slice(1);
+    var hh  = String(now.getHours()).padStart(2, '0');
+    var mm  = String(now.getMinutes()).padStart(2, '0');
+    var ss  = String(now.getSeconds()).padStart(2, '0');
+    var str = date + " | " + hh + ":" + mm + ":" + ss;
+    document.getElementById('rp-datetime').textContent  = str;
+    document.getElementById('vge-datetime').textContent = str;
+}
+setInterval(updateDateTime, 1000);
+updateDateTime();
+
+function updateWeather() {
+    var url = "https://api.openweathermap.org/data/2.5/weather?q="
+            + encodeURIComponent(WEATHER_CITY)
+            + ",NL&units=metric&lang=nl&appid=" + WEATHER_API_KEY;
+    fetch(url)
+        .then(function(r) {
+            if (!r.ok) { throw new Error(); }
+            return r.json();
         })
-        .catch(e => console.error("Sheet fout:", e));
+        .then(function(d) {
+            if (d.cod !== 200) { setWeather("Weer niet beschikbaar"); return; }
+            var temp = Math.round(d.main.temp);
+            var desc = d.weather[0].description;
+            var icon = '<img src="https://openweathermap.org/img/wn/' + d.weather[0].icon + '@2x.png" style="vertical-align:middle;width:26px;" alt="' + desc + '">';
+            var str  = icon + " " + WEATHER_CITY + " | " + temp + "\u00b0C | " + desc;
+            document.getElementById('rp-weather').innerHTML  = str;
+            document.getElementById('vge-weather').innerHTML = str;
+        })
+        .catch(function() { setWeather("Weer niet beschikbaar"); });
+}
 
-    // Datum & tijd
-    function updateDateTime() {
-        const now  = new Date();
-        let   date = now.toLocaleDateString('nl-NL', {
-            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-        });
-        date = date.charAt(0).toUpperCase() + date.slice(1);
-        const hh = String(now.getHours()).padStart(2, '0');
-        const mm = String(now.getMinutes()).padStart(2, '0');
-        const ss = String(now.getSeconds()).padStart(2, '0');
-        document.getElementById('datetime').textContent = `${date} | ${hh}:${mm}:${ss}`;
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
+function setWeather(msg) {
+    document.getElementById('rp-weather').textContent  = msg;
+    document.getElementById('vge-weather').textContent = msg;
+}
 
-    // Weer
-    function updateWeather() {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(WEATHER_CITY)},NL&units=metric&lang=nl&appid=${WEATHER_API_KEY}`)
-            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-            .then(d => {
-                if (d.cod !== 200) {
-                    document.getElementById("weather").textContent = "Weer niet beschikbaar";
-                    return;
-                }
-                const temp    = Math.round(d.main.temp);
-                const desc    = d.weather[0].description;
-                const iconUrl = `https://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png`;
-                document.getElementById("weather").innerHTML =
-                    `<img src="${iconUrl}" alt="${desc}" style="vertical-align:middle;width:26px;"> ${WEATHER_CITY} | ${temp}°C | ${desc}`;
-            })
-            .catch(() => {
-                document.getElementById("weather").textContent = "Weer niet beschikbaar";
-            });
-    }
-    updateWeather();
-    setInterval(updateWeather, 1800000);
+updateWeather();
+setInterval(updateWeather, 1800000);
 
-
-</script></body>
+</script>
+</body>
 </html>
